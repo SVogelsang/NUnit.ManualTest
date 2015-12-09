@@ -1,0 +1,24 @@
+﻿# demo file
+---
+- scenario: 
+    name: When copying a file, file should exist in new location.
+    description: Simple file copy.
+    single: true
+    preparations:
+      - prepare: single preparation
+    executions:
+      - execute: single execution 
+    expectations:
+      - expects: single expectation
+- scenario: 
+    name: When copying multiple files, files should exist in new location.
+    description: Copy multiple files.
+    preparations:
+      - prepare: first preparation
+      - prepare: second preparation
+    executions:
+      - execute: first execution 
+      - execute: second execution 
+    expectations:
+      - expects: first expectation
+      - expects: second expectation
