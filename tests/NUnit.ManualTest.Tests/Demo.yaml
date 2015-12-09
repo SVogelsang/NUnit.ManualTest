@@ -3,7 +3,7 @@
 - scenario: 
     name: When copying a file, file should exist in new location.
     description: Simple file copy.
-    single: true
+    type: SingleStep
     preparations:
       - prepare: single preparation
     executions:

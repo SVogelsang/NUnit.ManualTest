@@ -52,8 +52,8 @@ namespace NUnit.ManualTest
       get;
       set;
     }
-    [YamlMember(Alias = "single")]
-    public bool SingleUserInteraction
+    [YamlMember(Alias = "type")]
+    public PresentationType PresentationType
     {
       get;
       set;

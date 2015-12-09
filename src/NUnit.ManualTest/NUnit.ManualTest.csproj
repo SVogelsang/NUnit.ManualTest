@@ -45,10 +45,12 @@
   <ItemGroup>
     <Compile Include="ConsoleUserPresenter.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="If.cs" />
     <Compile Include="IUserPresenter.cs" />
     <Compile Include="ManualTestBase.cs" />
     <Compile Include="ManualTestBuilder.cs" />
     <Compile Include="MessageBoxUserPresenter.cs" />
+    <Compile Include="PresentationType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestScenario.cs" />
     <Compile Include="TestScenarionBuilder.cs" />

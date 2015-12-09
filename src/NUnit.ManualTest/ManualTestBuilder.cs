@@ -12,16 +12,30 @@ namespace NUnit.ManualTest
     private readonly List<string> _preparations = new List<string>();
     private readonly List<string> _executions = new List<string>();
     private readonly List<string> _expectations = new List<string>();
-    private bool _singleUserInteraction;
 
     public ManualTestBuilder(IUserPresenter presenter)
     {
       _presenter = presenter;
+      PresentationType = PresentationType.Once;
     }
 
-    public ManualTestBuilder AsingleUserInteraction()
+    public PresentationType PresentationType { get; set; }
+
+    public ManualTestBuilder AsSingleStepUserInteraction()
     {
-      _singleUserInteraction = true;
+      PresentationType = PresentationType.SingleStep;
+      return this;
+    }
+
+    public ManualTestBuilder AsGroupedUserInteraction()
+    {
+      PresentationType = PresentationType.Grouped;
+      return this;
+    }
+
+    public ManualTestBuilder AsOneStepUserInteraction()
+    {
+      PresentationType = PresentationType.Once;
       return this;
     }
 
@@ -45,22 +59,38 @@ namespace NUnit.ManualTest
 
     public void Ok()
     {
-      if (_singleUserInteraction)
+      switch (PresentationType)
       {
-        _preparations.ForEach(prepare => _presenter.Show(prepare));
-        _executions.ForEach(exec => _presenter.Show(exec));
-        Assert.True(_expectations.TrueForAll(expects => _presenter.Query(expects)));
-      }
-      else
-      {
-        Assert.True(_presenter.Query(MakeUserPresentation()));
+        case PresentationType.Once:
+          {
+            string presentation = AppendExpectation(AppendExecution(AppendPreparation(new StringBuilder()))).ToString();
+            Assert.True(_presenter.Query(presentation), presentation);
+            break;
+          }
+        case PresentationType.Grouped:
+          {
+            string preparation = AppendPreparation(new StringBuilder()).ToString();
+            If.Any(_preparations, () => Assert.True(_presenter.Query(preparation), preparation));
+            string execution = AppendExecution(new StringBuilder()).ToString();
+            If.Any(_executions, () => Assert.True(_presenter.Query(execution), execution));
+            string expectation = AppendExpectation(new StringBuilder()).ToString();
+            If.Any(_expectations, () => Assert.True(_presenter.Query(expectation), expectation));
+            break;
+          }
+        case PresentationType.SingleStep:
+          {
+            _preparations.ForEach(prepare => Assert.True(_presenter.Query(prepare), prepare));
+            _executions.ForEach(execution => Assert.True(_presenter.Query(execution), execution));
+            _expectations.ForEach(expectation => Assert.True(_presenter.Query(expectation), expectation));
+            break;
+          }
+        default:
+          throw new ArgumentOutOfRangeException();
       }
     }
 
-    private string MakeUserPresentation()
+    private StringBuilder AppendPreparation(StringBuilder builder)
     {
-      StringBuilder builder = new StringBuilder();
-
       if (_preparations.Any())
       {
         builder.AppendLine("Prepare:");
@@ -69,6 +99,11 @@ namespace NUnit.ManualTest
         builder.AppendLine();
       }
 
+      return builder;
+    }
+
+    private StringBuilder AppendExecution(StringBuilder builder)
+    {
       if (_executions.Any())
       {
         builder.AppendLine("Execute:");
@@ -77,6 +112,11 @@ namespace NUnit.ManualTest
         builder.AppendLine();
       }
 
+      return builder;
+    }
+
+    private StringBuilder AppendExpectation(StringBuilder builder)
+    {
       if (_expectations.Any())
       {
         builder.AppendLine("Verify:");
@@ -85,7 +125,7 @@ namespace NUnit.ManualTest
         builder.AppendLine();
       }
 
-      return builder.ToString();
+      return builder;
     }
   }
 }

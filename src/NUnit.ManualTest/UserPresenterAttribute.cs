@@ -76,7 +76,7 @@ namespace NUnit.ManualTest
     static public IUserPresenter CreatePresenter()
     {
       var attribute = FindAttribute();
-      return attribute != null ? attribute.Create() : new MessageBoxUserPresenter();
+      return attribute != null ? attribute.Create() : new ConsoleUserPresenter();
     }
 
     private static UserPresenterAttribute FindAttribute()

@@ -4,21 +4,6 @@ using NUnit.Framework;
 namespace NUnit.ManualTest.Tests
 {
   [TestFixture]
-  public class SomeTest : ManualTestBase
-  {
-    [Test]
-    public void When_doing_something_in_gui_something_should_happen_anywhere()
-    {
-      Test()
-        .Prepare("Open tab 'add something'")
-        .Do("Fill in user form")
-        .Ok();
-
-      // query result through code and assert something happened
-    }
-  }
-
-  [TestFixture]
   public class ManualTestBuilderTest
   {
     [Test]
@@ -29,7 +14,6 @@ namespace NUnit.ManualTest.Tests
 
       sut.Prepare("prep").Do("do").Verify("ok").Ok();
 
-      Mock.Get(presenter).Verify(me => me.Show(It.IsAny<string>()), Times.Never);
       Mock.Get(presenter).Verify(me => me.Query(It.IsAny<string>()), Times.Once);
     }
 
@@ -39,10 +23,10 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Prepare("1").Prepare("2").AsingleUserInteraction().Ok();
+      sut.Prepare("1").Prepare("2").AsSingleStepUserInteraction().Ok();
 
-      Mock.Get(presenter).Verify(me => me.Show("1"), Times.Once);
-      Mock.Get(presenter).Verify(me => me.Show("2"), Times.Once);
+      Mock.Get(presenter).Verify(me => me.Query("1"), Times.Once);
+      Mock.Get(presenter).Verify(me => me.Query("2"), Times.Once);
     }
 
     [Test]
@@ -51,10 +35,10 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Do("1").Do("2").AsingleUserInteraction().Ok();
+      sut.Do("1").Do("2").AsSingleStepUserInteraction().Ok();
 
-      Mock.Get(presenter).Verify(me => me.Show("1"), Times.Once);
-      Mock.Get(presenter).Verify(me => me.Show("2"), Times.Once);
+      Mock.Get(presenter).Verify(me => me.Query("1"), Times.Once);
+      Mock.Get(presenter).Verify(me => me.Query("2"), Times.Once);
     }
 
     [Test]
@@ -63,7 +47,7 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Verify("1").Verify("2").AsingleUserInteraction().Ok();
+      sut.Verify("1").Verify("2").AsSingleStepUserInteraction().Ok();
 
       Mock.Get(presenter).Verify(me => me.Query("1"), Times.Once);
       Mock.Get(presenter).Verify(me => me.Query("2"), Times.Once);
@@ -75,7 +59,7 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query("1") && !me.Query("2"));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      var prepare = sut.Verify("1").Verify("2").AsingleUserInteraction();
+      var prepare = sut.Verify("1").Verify("2").AsSingleStepUserInteraction();
       Assert.Throws<AssertionException>(() => prepare.Ok());
     }
     

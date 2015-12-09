@@ -4,13 +4,6 @@ namespace NUnit.ManualTest
 {
   public class ConsoleUserPresenter : IUserPresenter
   {
-    public void Show(string message)
-    {
-      Console.WriteLine(message);
-      Console.WriteLine("Press enter to continue...");
-      Console.ReadLine();
-    }
-
     public bool Query(string question)
     {
       Console.WriteLine(question);

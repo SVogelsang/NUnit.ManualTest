@@ -12,11 +12,7 @@ namespace NUnit.ManualTest
     protected void RunScenario(TestScenario scenario)
     {
       var test = Test();
-
-      if (scenario.SingleUserInteraction)
-      {
-        test.AsingleUserInteraction();
-      }
+      test.PresentationType = scenario.PresentationType;
 
       scenario.Preparations.ForEach(preparation => test.Prepare(preparation.Prepare));
       scenario.Executions.ForEach(execution => test.Do(execution.Execute));
