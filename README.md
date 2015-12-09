@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/9cwd0dgla00jpy3q?svg=true)](https://ci.appveyor.com/project/SVogelsang/nunit-manualtest)
 [![Issue Stats](http://issuestats.com/github/SVogelsang/NUnit.ManualTest/badge/issue)](http://issuestats.com/github/SVogelsang/NUnit.ManualTest)
 
 # NUnit.ManualTest
