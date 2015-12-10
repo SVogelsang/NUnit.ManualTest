@@ -4,9 +4,9 @@ namespace NUnit.ManualTest
 {
   public class ConsoleUserPresenter : IUserPresenter
   {
-    public bool Query(string question)
+    public bool Query(string message)
     {
-      Console.WriteLine(question);
+      Console.WriteLine(message);
       Console.WriteLine("yes|no?");
 
       do

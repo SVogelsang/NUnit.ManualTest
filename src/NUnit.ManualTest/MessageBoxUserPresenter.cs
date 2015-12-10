@@ -5,9 +5,9 @@ namespace NUnit.ManualTest
 {
   public class MessageBoxUserPresenter : IUserPresenter
   {
-    public bool Query(string question)
+    public bool Query(string message)
     {
-      return MessageBox.Show(question, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo) == DialogResult.Yes;
+      return MessageBox.Show(message, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo) == DialogResult.Yes;
     }
   }
 }

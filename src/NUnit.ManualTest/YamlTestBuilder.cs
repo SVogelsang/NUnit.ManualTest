@@ -8,7 +8,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace NUnit.ManualTest
 {
-  public static class TestScenarionBuilder
+  public static class TestScenarioBuilder
   {
     public static IEnumerable BuildFromYaml(string filename)
     {

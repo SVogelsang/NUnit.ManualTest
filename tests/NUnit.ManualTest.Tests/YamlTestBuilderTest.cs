@@ -1,15 +1,16 @@
+using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 
 namespace NUnit.ManualTest.Tests
 {
-  [TestFixture]
-  public class TestScenarionBuilderTest
+  [TestFixture, UserPresenter(typeof(FakeUserPresenter))]
+  public class TestScenarionBuilderTest : ManualTestBase
   {
     [Test]
     public void When_building_from_yaml_file_should_generate_test_cases()
     {
-      var scenarios = TestScenarionBuilder.BuildFromYaml("demo.yaml").Cast<TestCaseData>().ToList();
+      var scenarios = TestScenarioBuilder.BuildFromYaml("demo.yaml").Cast<TestCaseData>().ToList();
       var first = (TestScenario)scenarios.First().Arguments.First();
 
       Assert.AreEqual(1, first.Preparations.Count);
@@ -21,6 +22,17 @@ namespace NUnit.ManualTest.Tests
       Assert.AreEqual(2, second.Preparations.Count);
       Assert.AreEqual(2, second.Executions.Count);
       Assert.AreEqual(2, second.Expectations.Count);
+    }
+
+    public static IEnumerable Source()
+    {
+      return TestScenarioBuilder.BuildFromYaml("demo.yaml");
+    }
+
+    [Test, TestCaseSource("Source")]
+    public void When_using_yaml_file_as_test_case_source_should_generate_test_cases(TestScenario scenario)
+    {
+      RunScenario(scenario);
     }
   }
 }

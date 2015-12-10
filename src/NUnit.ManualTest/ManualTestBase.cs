@@ -2,11 +2,17 @@ namespace NUnit.ManualTest
 {
   public abstract class ManualTestBase
   {
+    private readonly PresentationType _presentationType;
     private readonly IUserPresenter _presenter = UserPresenterAttribute.CreatePresenter();
+
+    protected ManualTestBase(PresentationType presentationType = PresentationType.Once)
+    {
+      _presentationType = presentationType;
+    }
 
     protected ManualTestBuilder Test()
     {
-      return new ManualTestBuilder(_presenter);
+      return new ManualTestBuilder(_presenter, _presentationType);
     }
 
     protected void RunScenario(TestScenario scenario)

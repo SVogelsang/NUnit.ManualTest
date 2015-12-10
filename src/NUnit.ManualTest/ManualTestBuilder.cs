@@ -13,10 +13,10 @@ namespace NUnit.ManualTest
     private readonly List<string> _executions = new List<string>();
     private readonly List<string> _expectations = new List<string>();
 
-    public ManualTestBuilder(IUserPresenter presenter)
+    public ManualTestBuilder(IUserPresenter presenter, PresentationType presentationType = PresentationType.Once)
     {
       _presenter = presenter;
-      PresentationType = PresentationType.Once;
+      PresentationType = presentationType;
     }
 
     public PresentationType PresentationType { get; set; }
@@ -70,11 +70,11 @@ namespace NUnit.ManualTest
         case PresentationType.Grouped:
           {
             string preparation = AppendPreparation(new StringBuilder()).ToString();
-            If.Any(_preparations, () => Assert.True(_presenter.Query(preparation), preparation));
+            Any(_preparations, () => Assert.True(_presenter.Query(preparation), preparation));
             string execution = AppendExecution(new StringBuilder()).ToString();
-            If.Any(_executions, () => Assert.True(_presenter.Query(execution), execution));
+            Any(_executions, () => Assert.True(_presenter.Query(execution), execution));
             string expectation = AppendExpectation(new StringBuilder()).ToString();
-            If.Any(_expectations, () => Assert.True(_presenter.Query(expectation), expectation));
+            Any(_expectations, () => Assert.True(_presenter.Query(expectation), expectation));
             break;
           }
         case PresentationType.SingleStep:
@@ -86,6 +86,14 @@ namespace NUnit.ManualTest
           }
         default:
           throw new ArgumentOutOfRangeException();
+      }
+    }
+
+    private static void Any<T>(IEnumerable<T> @enum, Action doThis)
+    {
+      if (@enum.Any())
+      {
+        doThis();
       }
     }
 
