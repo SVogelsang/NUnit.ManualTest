@@ -42,7 +42,7 @@
     <Compile Include="FakeUserPresenter.cs" />
     <Compile Include="ManualTestBuilderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestScenarionBuilderTest.cs" />
+    <Compile Include="YamlTestBuilderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Demo.yaml">

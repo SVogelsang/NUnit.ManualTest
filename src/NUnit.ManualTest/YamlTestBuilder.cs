@@ -8,9 +8,9 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace NUnit.ManualTest
 {
-  public static class TestScenarioBuilder
+  public static class YamlTestBuilder
   {
-    public static IEnumerable BuildFromYaml(string filename)
+    public static IEnumerable BuildFrom(string filename)
     {
       using (var yamlReader = File.OpenText(filename))
       {

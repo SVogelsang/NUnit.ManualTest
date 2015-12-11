@@ -10,7 +10,7 @@ namespace NUnit.ManualTest.Tests
     [Test]
     public void When_building_from_yaml_file_should_generate_test_cases()
     {
-      var scenarios = TestScenarioBuilder.BuildFromYaml("demo.yaml").Cast<TestCaseData>().ToList();
+      var scenarios = YamlTestBuilder.BuildFrom("demo.yaml").Cast<TestCaseData>().ToList();
       var first = (TestScenario)scenarios.First().Arguments.First();
 
       Assert.AreEqual(1, first.Preparations.Count);
@@ -26,7 +26,7 @@ namespace NUnit.ManualTest.Tests
 
     public static IEnumerable Source()
     {
-      return TestScenarioBuilder.BuildFromYaml("demo.yaml");
+      return YamlTestBuilder.BuildFrom("demo.yaml");
     }
 
     [Test, TestCaseSource("Source")]

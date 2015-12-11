@@ -1,7 +1,5 @@
 #### 0.0.1-beta - December 24 2015
 * Initial release
-
-#### Features
 * Uses NUnit infrastructure for reports.
 * Integrated with NUnit and allows the mixing of automated and manually performed steps.
 * Let your product owners, product managers or marketing define manual tests by writing/editing YAML files.
