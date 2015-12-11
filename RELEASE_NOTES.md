@@ -1,4 +1,4 @@
-#### 0.1.1-beta - December 24 2015
+#### 0.0.1-beta - December 24 2015
 * Initial release
 
 #### Features
