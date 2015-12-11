@@ -12,6 +12,7 @@ Furthermore it offers the possibility that non-programmers e.g. product ownders,
 * Let your product owners, product managers or marketing define manual tests by writing/editing YAML files.
 * Configurable and/or customizable ways to get user feedback from manual tester (Console, WinForms MessageBoxes or custom implemented callbacks) via Attributes.
 
+
 ## Installation
 ```
 nuget install NUnit.ManualTest
