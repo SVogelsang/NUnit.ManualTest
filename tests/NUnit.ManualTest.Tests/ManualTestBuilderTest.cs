@@ -18,7 +18,7 @@ namespace NUnit.ManualTest.Tests
     }
 
     [Test]
-    public void When_multiple_preparation_executed_with_single_user_steps_should_call_show_for_each_preparation()
+    public void When_multiple_preparation_executed_with_single_user_steps_should_call_query_for_each_preparation()
     {
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
@@ -30,7 +30,7 @@ namespace NUnit.ManualTest.Tests
     }
 
     [Test]
-    public void When_multiple_executions_executed_with_single_user_steps_should_call_show_for_each_execution()
+    public void When_multiple_executions_executed_with_single_user_steps_should_call_query_for_each_execution()
     {
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
@@ -42,7 +42,7 @@ namespace NUnit.ManualTest.Tests
     }
 
     [Test]
-    public void When_multiple_expectations_executed_with_single_user_steps_should_call_show_for_each_expectation()
+    public void When_multiple_expectations_executed_with_single_user_steps_should_call_query_for_each_expectation()
     {
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
@@ -51,6 +51,17 @@ namespace NUnit.ManualTest.Tests
 
       Mock.Get(presenter).Verify(me => me.Query("1"), Times.Once);
       Mock.Get(presenter).Verify(me => me.Query("2"), Times.Once);
+    }
+
+    [Test]
+    public void When_multiple_preparations_executions_and_expectations_executed_with_grouped_callbacks_should_call_query_for_each_group()
+    {
+      var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
+      var sut = new Builder().WithPresenter(presenter).Build();
+
+      sut.Prepare("1").Prepare("2").Do("3").Do("4").Verify("5").Verify("6").AsGroupedUserInteraction().Ok();
+
+      Mock.Get(presenter).Verify(me => me.Query(It.IsAny<string>()), Times.Exactly(3));
     }
 
     [Test]

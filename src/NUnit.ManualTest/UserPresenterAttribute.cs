@@ -1,54 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reflection;
-using NUnit.Framework;
 
 namespace NUnit.ManualTest
 {
   [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class)]
   public class UserPresenterAttribute : Attribute
   {
-    private static class StackWalker
-    {
-      public static T WalkToAndGet<T>(Func<Type, bool> predicate, Func<Type, T> getter)
-      {
-        int frameOffset = 4;
-
-        while (true)
-        {
-          StackFrame frame = new StackFrame(frameOffset);
-          if (frame.GetMethod() == null)
-          {
-            return default(T);
-          }
-
-          Type current = frame.GetMethod().DeclaringType;
-          if (predicate(current))
-          {
-            return getter(current);
-          }
-
-          frameOffset++;
-        }
-      }
-    }
-
-    static private class AssemblyDefinedUserPresenter
-    {
-      private static UserPresenterAttribute _attribute;
-      private static bool _alreadySearched;
-
-      static public UserPresenterAttribute Get()
-      {
-        if (!_alreadySearched && _attribute == null)
-        {
-          _attribute = StackWalker.WalkToAndGet(IsTestFixture, type => type.Assembly.GetCustomAttribute<UserPresenterAttribute>());
-          _alreadySearched = true;
-        }
-        return _attribute;
-      }
-    }
-
     private readonly Type _presenterType;
 
     public UserPresenterAttribute(Type presenterType)
@@ -73,32 +30,22 @@ namespace NUnit.ManualTest
       return (IUserPresenter)Activator.CreateInstance(_presenterType);
     }
 
-    static public IUserPresenter CreatePresenter()
+    static public IUserPresenter CreatePresenter(Type type)
     {
-      var attribute = FindAttribute();
+      var attribute = FindAttribute(type);
       return attribute != null ? attribute.Create() : new ConsoleUserPresenter();
     }
 
-    private static UserPresenterAttribute FindAttribute()
+    private static UserPresenterAttribute FindAttribute(Type type)
     {
-      UserPresenterAttribute attribute;
-      if (TryFindOnTestClass(out attribute))
+      UserPresenterAttribute attribute = type.GetCustomAttribute<UserPresenterAttribute>(true);
+      
+      if (attribute != null)
       {
         return attribute;
       }
 
-      return AssemblyDefinedUserPresenter.Get();
-    }
-
-    private static bool TryFindOnTestClass(out UserPresenterAttribute attribute)
-    {
-      attribute = StackWalker.WalkToAndGet(IsTestFixture, type => type.GetCustomAttribute<UserPresenterAttribute>());
-      return attribute != null;
-    }
-
-    private static bool IsTestFixture(Type type)
-    {
-      return type.GetCustomAttribute<TestFixtureAttribute>() != null;
+      return type.Assembly.GetCustomAttribute<UserPresenterAttribute>();
     }
   }
 }

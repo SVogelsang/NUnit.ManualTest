@@ -19,6 +19,53 @@ nuget install NUnit.ManualTest
 
 ```
 
+## Specifying presenter
+A user presenter can either be specified on test fixture attribute
+
+``` C#
+[TestFixture, UserPresenter(typeof(ConsoleUserPresenter))]
+public class SomeSpec : ManualTestBase
+{
+}
+```
+or assembly-wide using assembly attribute
+
+``` C#
+[assembly: UserPresenter(typeof(ConsoleUserPresenter))]
+
+```
+## Specifying presentation type
+There are three types to guide the tester through the test:
+1. **SingleStep:** Each preparation, execution and verification step must be committed by the tester. This could be useful whenever single steps of complex testing scenarios might fail and should be reported in test report.
+2. **Grouped:** Each group (preparation, execution and verification) must be committed by the tester.
+2. **Once:** (default) The complete testing scenario is presented to the user and must be committed only once.
+
+The presentation type can be specified:
+1. **in YAML file:** using the type attribute inside the scenario;
+2. **globally in whole test fixture:** passing to the type to base ctor.
+``` C#
+[TestFixture]
+public class SomeSpec : ManualTestBase
+{
+  public SomeSpec() : base(PresentationType.Grouped)
+  {
+  }
+}
+```
+
+3. **in coded tests:** by setting up the test builder.
+``` C#
+[Test]
+public void When_doing_something_should_result_in_something()
+{
+  Test()
+    .Prepare("Prepare something")
+    .Do("Execute something")
+    .Verify("Verify somthing happened")
+    .AsGroupedUserInteraction()
+    .Ok();
+}
+```
 ## Examples
 #### Tests generated from yaml file
 ``` C#
@@ -37,8 +84,11 @@ nuget install NUnit.ManualTest
     }
   }
 ```
+
+##### demo file
+
+
 ``` yaml
-# demo file
 ---
 - scenario:
     name: When pressing 'print' button should open print dialog with pre-selected current page.
@@ -59,7 +109,9 @@ nuget install NUnit.ManualTest
 ``` C#
 //todo
 ```
+
 ## Planned
 * NuGet package
 * Documenation and examples
+* Nested scenarios
 * Generating test cases and fixtures from markdown files

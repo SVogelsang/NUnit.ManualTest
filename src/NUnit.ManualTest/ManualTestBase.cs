@@ -3,11 +3,12 @@ namespace NUnit.ManualTest
   public abstract class ManualTestBase
   {
     private readonly PresentationType _presentationType;
-    private readonly IUserPresenter _presenter = UserPresenterAttribute.CreatePresenter();
+    private readonly IUserPresenter _presenter;
 
     protected ManualTestBase(PresentationType presentationType = PresentationType.Once)
     {
       _presentationType = presentationType;
+      _presenter = UserPresenterAttribute.CreatePresenter(GetType());
     }
 
     protected ManualTestBuilder Test()
