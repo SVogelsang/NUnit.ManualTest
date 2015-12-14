@@ -66,6 +66,7 @@ public void When_doing_something_should_result_in_something()
     .Ok();
 }
 ```
+
 ## Examples
 #### Tests generated from yaml file
 ``` C#
@@ -107,7 +108,19 @@ public void When_doing_something_should_result_in_something()
 
 #### Coded tests
 ``` C#
-//todo
+[Test]
+public void When_doing_something_should_result_in_something()
+{
+  Test()
+    .Prepare("Prepare something")
+    .Prepare("Prepare something other")
+    .Do("Execute something")
+    .Do("Execute something other")
+    .Verify("Verify somthing happened")
+    .Verify("and also this one")
+    .AsGroupedUserInteraction()
+    .Ok();
+}
 ```
 
 ## Planned
