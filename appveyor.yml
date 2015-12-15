@@ -8,4 +8,5 @@ artifacts:
   - path: bin
     name: bin
   - path: 'bin\**\*.nupkg'
+    name: package
     
