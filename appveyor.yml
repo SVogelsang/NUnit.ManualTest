@@ -5,7 +5,7 @@ build_script:
 test: off
 version: 0.0.1.{build}
 artifacts:
-  - path: bin\Nunit.ManualTest
+  - path: bin
     name: bin
-  - path: bin\*.nupkg
+  - path: **\*.nupkg
     
