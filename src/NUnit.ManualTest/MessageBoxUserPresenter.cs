@@ -8,6 +8,7 @@ namespace NUnit.ManualTest
   /// </summary>
   public class MessageBoxUserPresenter : IUserPresenter
   {
+    /// <inheritdoc/>
     public bool Query(string message)
     {
       return MessageBox.Show(message, Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.YesNo) == DialogResult.Yes;
