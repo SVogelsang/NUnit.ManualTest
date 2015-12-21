@@ -1,4 +1,6 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/9cwd0dgla00jpy3q?svg=true)](https://ci.appveyor.com/project/SVogelsang/nunit-manualtest)
+.NET|Mono
+----|----
+[![Build status .NET](https://ci.appveyor.com/api/projects/status/9cwd0dgla00jpy3q?svg=true)](https://ci.appveyor.com/project/SVogelsang/nunit-manualtest)|[![Build Status Mono](https://travis-ci.org/SVogelsang/NUnit.ManualTest.svg?branch=master)](https://travis-ci.org/SVogelsang/NUnit.ManualTest)
 
 [![Issue Stats](http://issuestats.com/github/SVogelsang/NUnit.ManualTest/badge/issue)](http://issuestats.com/github/SVogelsang/NUnit.ManualTest)
 
@@ -50,7 +52,7 @@ The presentation type can be specified:
         name: When pressing 'print' button should open print dialog with pre-selected current page.
         description: printing single page.
         type: SingleStep
-    ``` 
+    ```
 
 2. **globally for whole test fixture:** passing to the type to base ctor.
 
