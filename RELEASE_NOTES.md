@@ -1,4 +1,4 @@
-#### 0.0.1-beta - December 24 2015
+#### 0.1.1-beta - December 24 2015
 * Initial release
 * Uses NUnit infrastructure for reports.
 * Integrated with NUnit and allows the mixing of automated and manually performed steps.

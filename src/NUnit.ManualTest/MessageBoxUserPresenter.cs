@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 namespace NUnit.ManualTest
 {
+  /// <summary>
+  /// A preasenter for getting feedback through WinForm message box.
+  /// </summary>
   public class MessageBoxUserPresenter : IUserPresenter
   {
     public bool Query(string message)

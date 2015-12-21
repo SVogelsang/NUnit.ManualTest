@@ -1,7 +1,7 @@
 (*** hide ***)
 // This block of code is omitted in the generated HTML documentation. Use 
 // it to define helpers that you do not want to show in the documentation.
-#I "../../bin"
+#I "../../bin/NUnit.ManualTest"
 
 (**
 NUnit.ManualTest
@@ -20,28 +20,13 @@ Documentation
   <div class="span1"></div>
 </div>
 
-Example
--------
-
-This example demonstrates using a function defined in this sample library.
-
 *)
-#r "NUnit.ManualTest.dll"
-open NUnit.ManualTest
-
-printfn "hello = %i" <| Library.hello 0
 
 (**
-Some more info
-
 Samples & documentation
 -----------------------
 
-The library comes with comprehensible documentation. 
-It can include tutorials automatically generated from `*.fsx` files in [the content folder][content]. 
-The API reference is automatically generated from Markdown comments in the library implementation.
-
- * [Tutorial](tutorial.html) contains a further explanation of this sample library.
+ * [Tutorial](tutorial.html) contains samples of the most common use cases.
 
  * [API Reference](reference/index.html) contains automatically generated documentation for all types, modules
    and functions in the library. This includes additional brief samples on using most of the
@@ -59,9 +44,9 @@ The library is available under Public Domain license, which allows modification 
 redistribution for both commercial and non-commercial purposes. For more information see the 
 [License file][license] in the GitHub repository. 
 
-  [content]: https://github.com/fsprojects/NUnit.ManualTest/tree/master/docs/content
-  [gh]: https://github.com/fsprojects/NUnit.ManualTest
-  [issues]: https://github.com/fsprojects/NUnit.ManualTest/issues
-  [readme]: https://github.com/fsprojects/NUnit.ManualTest/blob/master/README.md
-  [license]: https://github.com/fsprojects/NUnit.ManualTest/blob/master/LICENSE.txt
+  [content]: https://github.com/SVogelsang/NUnit.ManualTest/tree/master/docs/content
+  [gh]: https://github.com/SVogelsang/NUnit.ManualTest
+  [issues]: https://github.com/SVogelsang/NUnit.ManualTest/issues
+  [readme]: https://github.com/SVogelsang/NUnit.ManualTest/blob/master/README.md
+  [license]: https://github.com/SVogelsang/NUnit.ManualTest/blob/master/LICENSE.txt
 *)

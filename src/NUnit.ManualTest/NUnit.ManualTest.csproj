@@ -54,7 +54,7 @@
     <Compile Include="TestScenario.cs" />
     <Compile Include="UserPresenterAttribute.cs" />
     <Compile Include="YamlTestBuilder.cs" />
-    <Compile Include="YamlTestScenarios.cs" />
+    <Compile Include="TestScenarios.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />

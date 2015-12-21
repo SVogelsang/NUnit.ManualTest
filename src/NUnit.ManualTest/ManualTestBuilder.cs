@@ -6,6 +6,9 @@ using NUnit.Framework;
 
 namespace NUnit.ManualTest
 {
+  /// <summary>
+  /// The builder for building the test scenarios.
+  /// </summary>
   public class ManualTestBuilder
   {
     private readonly IUserPresenter _presenter;
@@ -13,50 +16,92 @@ namespace NUnit.ManualTest
     private readonly List<string> _executions = new List<string>();
     private readonly List<string> _expectations = new List<string>();
 
+    /// <summary>
+    /// Creates a new instance.
+    /// </summary>
+    /// <param name="presenter">The user presenter to be used for feedback.</param>
+    /// <param name="presentationType">The presentation type to be used.</param>
     public ManualTestBuilder(IUserPresenter presenter, PresentationType presentationType = PresentationType.Once)
     {
       _presenter = presenter;
       PresentationType = presentationType;
     }
 
+    /// <summary>
+    /// Gets or sets the presentation type.
+    /// </summary>
     public PresentationType PresentationType { get; set; }
 
+    /// <summary>
+    /// Use SingleStep <see cref="PresentationType"/>.
+    /// </summary>
+    /// <returns>this</returns>
     public ManualTestBuilder AsSingleStepUserInteraction()
     {
       PresentationType = PresentationType.SingleStep;
       return this;
     }
 
+    /// <summary>
+    /// Use Grouped <see cref="PresentationType"/>.
+    /// </summary>
+    /// <returns>this</returns>
     public ManualTestBuilder AsGroupedUserInteraction()
     {
       PresentationType = PresentationType.Grouped;
       return this;
     }
 
+    /// <summary>
+    /// Use Once <see cref="PresentationType"/>.
+    /// </summary>
+    /// <returns>this</returns>
     public ManualTestBuilder AsOneStepUserInteraction()
     {
       PresentationType = PresentationType.Once;
       return this;
     }
 
+    /// <summary>
+    /// Adds a preparation step.
+    /// </summary>
+    /// <param name="format">The message or format (<see cref="string.Format(string,object)"/>).</param>
+    /// <param name="args">The format arguments.</param>
+    /// <returns>this</returns>
     public ManualTestBuilder Prepare(string format, params object[] args)
     {
       _preparations.Add(String.Format(format, args));
       return this;
     }
 
+    /// <summary>
+    /// Adds an execution step.
+    /// </summary>
+    /// <param name="format">The message or format (<see cref="string.Format(string,object)"/>).</param>
+    /// <param name="args">The format arguments.</param>
+    /// <returns>this</returns>
     public ManualTestBuilder Do(string format, params object[] args)
     {
       _executions.Add(String.Format(format, args));
       return this;
     }
 
+    /// <summary>
+    /// Adds a verification step.
+    /// </summary>
+    /// <param name="format">The message or format (<see cref="string.Format(string,object)"/>).</param>
+    /// <param name="args">The format arguments.</param>
+    /// <returns>this</returns>
     public ManualTestBuilder Verify(string format, params object[] args)
     {
       _expectations.Add(String.Format(format, args));
       return this;
     }
 
+    /// <summary>
+    /// Executes the test by presenting the preparations/executions and verification steps to the tester. The first negative feedback will cause an <see cref="AssertionException"/>
+    /// </summary>
+    /// <exception cref="AssertionException">if the tester does not confirm one of the steps.</exception>
     public void Ok()
     {
       switch (PresentationType)

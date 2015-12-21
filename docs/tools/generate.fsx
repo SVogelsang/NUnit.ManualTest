@@ -13,7 +13,7 @@ let referenceBinaries = []
 // Web site location for the generated documentation
 let website = "/NUnit.ManualTest"
 
-let githubLink = "http://github.com/stvo/NUnit.ManualTest"
+let githubLink = "http://github.com/SVogelsang/NUnit.ManualTest"
 
 // Specify more information about your project
 let info =
@@ -104,7 +104,7 @@ let buildReference () =
       parameters = ("root", root)::info,
       sourceRepo = githubLink @@ "tree/master",
       sourceFolder = __SOURCE_DIRECTORY__ @@ ".." @@ "..",
-      publicOnly = true,libDirs = libDirs )
+      publicOnly = false,libDirs = libDirs, markDownComments = false)
 
 // Build documentation from `fsx` and `md` files in `docs/content`
 let buildDocumentation () =

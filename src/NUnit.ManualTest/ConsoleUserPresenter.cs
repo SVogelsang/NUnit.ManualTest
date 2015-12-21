@@ -2,6 +2,9 @@
 
 namespace NUnit.ManualTest
 {
+  /// <summary>
+  /// A preasenter for getting feedback through console.
+  /// </summary>
   public class ConsoleUserPresenter : IUserPresenter
   {
     public bool Query(string message)
@@ -14,11 +17,11 @@ namespace NUnit.ManualTest
         string line = Console.ReadLine();
         if (!string.IsNullOrEmpty(line))
         {
-          if (line.ToLower() == "yes")
+          if (line.ToLower() == "yes" | line.ToLower() == "y")
           {
             return true;
           }
-          if (line.ToLower() == "no")
+          if (line.ToLower() == "no" || line.ToLower() == "n")
           {
             return false;
           }
