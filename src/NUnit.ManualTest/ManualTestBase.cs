@@ -39,7 +39,7 @@ namespace NUnit.ManualTest
       scenario.Preparations.ForEach(preparation => test.Prepare(preparation.Prepare));
       scenario.Executions.ForEach(execution => test.Do(execution.Execute));
       scenario.Expectations.ForEach(expectation => test.Verify(expectation.Expects));
-      test.Ok();
+      test.Go();
     }
   }
 }

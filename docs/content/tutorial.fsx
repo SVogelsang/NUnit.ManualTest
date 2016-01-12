@@ -112,7 +112,7 @@ public void When_doing_something_should_result_in_something()
     .Do("Execute something")
     .Verify("Verify somthing happened")
     .AsGroupedUserInteraction()
-    .Ok();
+    .Go();
 }
 ```
 This overrules the 'higher-level' setups.

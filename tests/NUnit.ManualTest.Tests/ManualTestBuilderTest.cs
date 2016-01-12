@@ -12,7 +12,7 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Prepare("prep").Do("do").Verify("ok").Ok();
+      sut.Prepare("prep").Do("do").Verify("ok").Go();
 
       Mock.Get(presenter).Verify(me => me.Query(It.IsAny<string>()), Times.Once);
     }
@@ -23,7 +23,7 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Prepare("1").Prepare("2").AsSingleStepUserInteraction().Ok();
+      sut.Prepare("1").Prepare("2").AsSingleStepUserInteraction().Go();
 
       Mock.Get(presenter).Verify(me => me.Query("1"), Times.Once);
       Mock.Get(presenter).Verify(me => me.Query("2"), Times.Once);
@@ -35,7 +35,7 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Do("1").Do("2").AsSingleStepUserInteraction().Ok();
+      sut.Do("1").Do("2").AsSingleStepUserInteraction().Go();
 
       Mock.Get(presenter).Verify(me => me.Query("1"), Times.Once);
       Mock.Get(presenter).Verify(me => me.Query("2"), Times.Once);
@@ -47,7 +47,7 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Verify("1").Verify("2").AsSingleStepUserInteraction().Ok();
+      sut.Verify("1").Verify("2").AsSingleStepUserInteraction().Go();
 
       Mock.Get(presenter).Verify(me => me.Query("1"), Times.Once);
       Mock.Get(presenter).Verify(me => me.Query("2"), Times.Once);
@@ -59,7 +59,7 @@ namespace NUnit.ManualTest.Tests
       var presenter = Mock.Of<IUserPresenter>(me => me.Query(It.IsAny<string>()));
       var sut = new Builder().WithPresenter(presenter).Build();
 
-      sut.Prepare("1").Prepare("2").Do("3").Do("4").Verify("5").Verify("6").AsGroupedUserInteraction().Ok();
+      sut.Prepare("1").Prepare("2").Do("3").Do("4").Verify("5").Verify("6").AsGroupedUserInteraction().Go();
 
       Mock.Get(presenter).Verify(me => me.Query(It.IsAny<string>()), Times.Exactly(3));
     }
@@ -71,7 +71,7 @@ namespace NUnit.ManualTest.Tests
       var sut = new Builder().WithPresenter(presenter).Build();
 
       var prepare = sut.Verify("1").Verify("2").AsSingleStepUserInteraction();
-      Assert.Throws<AssertionException>(() => prepare.Ok());
+      Assert.Throws<AssertionException>(() => prepare.Go());
     }
     
     private class Builder

@@ -133,9 +133,12 @@ public void When_doing_something_should_result_in_something()
     .Verify("Verify somthing happened")
     .Verify("and also this one")
     .AsGroupedUserInteraction()
-    .Ok();
+    .Go();
 }
 ```
 
 ## Planned
+* Support of nested test scenarios in YAML files
 * Generating test cases and fixtures from markdown files
+
+> This project was generated with [F# project scaffold](https://github.com/fsprojects/ProjectScaffold) :thumbsup:

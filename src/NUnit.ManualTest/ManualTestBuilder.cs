@@ -102,7 +102,7 @@ namespace NUnit.ManualTest
     /// Executes the test by presenting the preparations/executions and verification steps to the tester. The first negative feedback will cause an <see cref="AssertionException"/>
     /// </summary>
     /// <exception cref="AssertionException">if the tester does not confirm one of the steps.</exception>
-    public void Ok()
+    public void Go()
     {
       switch (PresentationType)
       {
