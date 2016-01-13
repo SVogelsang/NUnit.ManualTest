@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>NUnit integrated manual testing
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="NUnit.ManualTest is designed to include manual tests in the NUnit Framework infrastructure."/>
+    <meta name="author" content="Stefan Vogelsang"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/NUnit.ManualTest/content/style.css" />
+    <script type="text/javascript" src="/NUnit.ManualTest/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/SVogelsang/NUnit.ManualTest">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/NUnit.ManualTest/index.html">NUnit.ManualTest</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1><a name="NUnit-integrated-manual-testing" class="anchor" href="#NUnit-integrated-manual-testing">NUnit integrated manual testing</a></h1>
+
+<p>NUnit.ManualTest is designed to include manual tests in the NUnit Framework infrastructure. The developer simply can add manual test scenarios to an NUnit test that guides a manual tester step-by-step through the testing scenario. The benefit is a NUnit compliant report.
+Furthermore it offers the possibility that non-programmers e.g. product owners, product managers or marketing can define manual test cases through YAML files.</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">//let source = YamlTestBuilder.BuildFrom(&quot;demo.yaml&quot;)</span>
+</code></pre></td>
+</tr>
+</table>
+
+<h1><a name="Installation" class="anchor" href="#Installation">Installation</a></h1>
+
+<p>Install with nuget</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">nuget</span> <span class="i">install</span> <span class="i">NUnit</span><span class="o">.</span><span class="i">ManualTest</span>
+</code></pre></td>
+</tr>
+</table>
+
+<h1><a name="Examples" class="anchor" href="#Examples">Examples</a></h1>
+
+<h2><a name="Generating-tests-from-YAML-files" class="anchor" href="#Generating-tests-from-YAML-files">Generating tests from YAML files</a></h2>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="csharp">[TestFixture]
+<span class="k">public</span> <span class="k">class</span> SomeWorkflowSpec <span class="o">:</span> ManualTestBase
+{
+  <span class="k">public</span> <span class="k">static</span> IEnumerable Source()
+  {
+    <span class="k">return</span> YamlTestBuilder.BuildFrom(<span class="s">"demo.yaml"</span>);
+  }
+
+  [Test, TestCaseSource(<span class="s">"Source"</span>)]
+  <span class="k">public</span> <span class="k">void</span> SomeScenario(TestScenario scenario)
+  {
+    RunScenario(scenario);
+  }
+}
+</code></pre></td></tr></table>
+
+<h2><a name="Choosing-the-presentation-type" class="anchor" href="#Choosing-the-presentation-type">Choosing the presentation type</a></h2>
+
+<p>For each test fixture:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="csharp">[TestFixture, UserPresenter(<span class="k">typeof</span>(ConsoleUserPresenter))]
+<span class="k">public</span> <span class="k">class</span> SomeSpec <span class="o">:</span> ManualTestBase
+{
+}
+</code></pre></td></tr></table>
+
+<p>Assembly-wide setup:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="csharp">[assembly: UserPresenter(<span class="k">typeof</span>(ConsoleUserPresenter))]
+</code></pre></td></tr></table>
+
+<p><strong>The default presenter is the console presenter.</strong></p>
+
+<h2><a name="Specifying-presentation-type" class="anchor" href="#Specifying-presentation-type">Specifying presentation type</a></h2>
+
+<p>There are three types defined the tester is guided through the different test steps (preparation, execution and validation).</p>
+
+<ol>
+<li><strong>SingleStep:</strong> Each preparation, execution and verification step must be committed by the tester. This could be useful whenever single steps of complex testing scenarios might fail and should be reported in test report.</li>
+<li><strong>Grouped:</strong> Each group (preparation, execution and verification) must be committed by the tester.</li>
+<li><strong>Once:</strong> (default) The complete testing scenario is presented to the user and must be committed only once.</li>
+</ol>
+
+<p>The presentation type can be specified:</p>
+
+<ol>
+<li><strong>in YAML file:</strong> using the type attribute inside the scenario.</li>
+</ol>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="yaml">- scenario:
+    name: When pressing 'print' button should open print dialog with pre-selected current page.
+    description: printing single page.
+    type: SingleStep
+</code></pre></td></tr></table>
+
+<ol>
+<li><strong>globally for whole test fixture:</strong> passing to the type to base ctor.</li>
+</ol>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="C#">public class SomeSpec : ManualTestBase
+{
+  public SomeSpec() : base(PresentationType.Grouped)
+  {
+  }
+}
+</code></pre></td></tr></table>
+
+<ol>
+<li><strong>in coded tests:</strong> by setting up the test builder.</li>
+</ol>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="C#">public void When_doing_something_should_result_in_something()
+{
+  Test()
+    .Prepare("Prepare something")
+    .Do("Execute something")
+    .Verify("Verify somthing happened")
+    .AsGroupedUserInteraction()
+    .Go();
+}
+</code></pre></td></tr></table>
+
+<p>This overrules the 'higher-level' setups.</p>
+
+
+        </div>
+        <div class="span3">
+          <img src="/NUnit.ManualTest/img/logo.png" alt="C# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">NUnit.ManualTest</li>
+            <li><a href="/NUnit.ManualTest/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/NUnit.ManualTest">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/SVogelsang/NUnit.ManualTest">Source Code on GitHub</a></li>
+            <li><a href="/NUnit.ManualTest/license.html">License</a></li>
+            <li><a href="/NUnit.ManualTest/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/NUnit.ManualTest/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/NUnit.ManualTest/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/SVogelsang/NUnit.ManualTest"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>
