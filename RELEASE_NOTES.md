@@ -1,4 +1,4 @@
-#### 1.0.0 - January 12 2016
+#### 1.0.0 - January 13 2016
 * First release
 * Uses NUnit infrastructure for reports.
 * Integrated with NUnit and allows the mixing of automated and manually performed steps.
