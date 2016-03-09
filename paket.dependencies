@@ -2,10 +2,10 @@ source https://nuget.org/api/v2
 
 nuget FSharp.Formatting
 nuget Moq
-nuget NUnit 
+nuget NUnit >= 2.6.4
 nuget NUnit.Runners
 nuget FAKE
 nuget SourceLink.Fake
-nuget YamlDotNet
+nuget YamlDotNet >= 3.6
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

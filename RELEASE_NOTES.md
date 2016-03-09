@@ -1,3 +1,6 @@
+#### 1.0.1 - March 09 2016
+* Fixed: for some reasons NuGet loads the wrong YamlDotNet reference.
+
 #### 1.0.0 - January 13 2016
 * First release
 * Uses NUnit infrastructure for reports.
