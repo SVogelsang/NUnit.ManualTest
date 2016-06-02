@@ -6,7 +6,7 @@
 
 # NUnit.ManualTest
 NUnit.ManualTest is designed to include manual tests in the NUnit Framework infrastructure. The developer simply can add manual test scenarios to an NUnit test that guides a manual tester step-by-step through the testing scenario. The benefit is a NUnit compliant report.
-Furthermore it offers the possibility that non-programmers e.g. product owners, product managers or marketing can define manual test cases through YAML files.
+Furthermore it offers the possibility that non-programmers e.g. product owners, product managers or marketing can define manual test cases through YAML files. See [Github Pages](https://svogelsang.github.io/NUnit.ManualTest/) for further information.
 
 ## Features
 * Uses NUnit infrastructure for reports.
