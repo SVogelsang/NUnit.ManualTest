@@ -1,13 +1,10 @@
-init:
-  - git config --global core.autocrlf input
-build: off
-build_script:
-  - cmd: build.cmd BuildPackage
-test: off
 version: 0.0.1.{build}
+build_script:
+- cmd: build.cmd BuildPackage
+test: off
 artifacts:
-  - path: bin
-    name: bin
-  - path: 'bin\**\*.nupkg'
-    name: package
+- path: bin
+  name: bin
+- path: 'bin\**\*.nupkg'
+  name: package
     
